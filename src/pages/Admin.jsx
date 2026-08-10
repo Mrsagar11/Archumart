@@ -246,11 +246,6 @@ export default function Admin() {
             </button>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-            <p className="text-xs text-gray-400">
-              Default password: <code className="bg-gray-50 px-1.5 py-0.5 rounded font-mono text-gray-600">@Archana//123</code>
-            </p>
-          </div>
         </div>
       </div>
     );
