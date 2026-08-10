@@ -37,7 +37,7 @@ export const api = {
       return { success: true };
     } catch (err) {
       console.warn('Backend API offline or failed, using local verification fallback:', err.message);
-      if (password === 'ArchuMart@Sakoli') {
+      if (password === '@Archana//123') {
         localStorage.setItem('admin_token', 'archumart-admin-token-session');
         return { success: true };
       }

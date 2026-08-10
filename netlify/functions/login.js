@@ -16,7 +16,7 @@ exports.handler = async (event, context) => {
 
   try {
     const { password } = JSON.parse(event.body);
-    const correctPassword = process.env.ADMIN_PASSWORD || 'ArchuMart@Sakoli';
+    const correctPassword = process.env.ADMIN_PASSWORD || '@Archana//123';
 
     if (password === correctPassword) {
       return { 
