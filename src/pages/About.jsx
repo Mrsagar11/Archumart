@@ -10,7 +10,7 @@ const About = () => {
     {
       icon: <ShoppingBag className="w-6 h-6 text-primary" />,
       title: "Wide Product Range",
-      description: "From daily groceries to specialty items, we stock everything you need under one roof."
+      description: "From home essentials and stationery to specialty products, we stock everything you need under one roof."
     },
     {
       icon: <Smile className="w-6 h-6 text-primary" />,
@@ -49,7 +49,7 @@ const About = () => {
             Your Everyday Store in Sakoli
           </h1>
           <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Providing fresh produce, quality groceries, and everyday essentials to the heart of Maharashtra. We are more than just a store; we are part of your community.
+            Providing quality home items, stationery, toys, and everyday essentials to the heart of Maharashtra. We are more than just a store; we are part of your community.
           </p>
         </div>
       </section>
@@ -72,7 +72,7 @@ const About = () => {
                 Archu Mart began with a simple idea: to provide the people of Sakoli with a convenient, reliable, and friendly place to shop for their daily needs.
               </p>
               <p>
-                Over the years, we've grown alongside our community. We take pride in knowing our customers by name and understanding exactly what they prefer. Whether it's the freshest vegetables for your morning meal or the perfect snacks for an evening gathering, Archu Mart is here to serve.
+                Over the years, we've grown alongside our community. We take pride in knowing our customers by name and understanding exactly what they need. Whether it's school gear for your kids or essential kitchen tools for your home, Archu Mart is here to serve.
               </p>
               <p>
                 We believe in fair pricing, exceptional quality, and service that makes you feel at home. That's the Archu Mart promise.
