@@ -1,29 +1,43 @@
+const { connectToDatabase } = require('./utils/db');
+
 exports.handler = async (event, context) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Content-Type': 'application/json'
   };
 
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+    return { statusCode: 200, headers };
   }
 
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return {
+      statusCode: 405,
+      headers,
+      body: JSON.stringify({ error: 'Method not allowed' }),
+    };
   }
 
   try {
     const { password } = JSON.parse(event.body);
-    const correctPassword = process.env.ADMIN_PASSWORD;
+    let correctPassword = null;
 
+    // 1. Try to read from MongoDB settings collection
+    try {
+      const { db } = await connectToDatabase();
+      const settings = db.collection('settings');
+      const pwdSetting = await settings.findOne({ key: 'admin_password' });
+      if (pwdSetting && pwdSetting.value) {
+        correctPassword = pwdSetting.value;
+      }
+    } catch (dbError) {
+      console.warn('Could not read admin password from database, falling back to environment settings:', dbError.message);
+    }
+
+    // 2. Fall back to environment variable or bootstrap default if database is empty/unreachable
     if (!correctPassword) {
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ success: false, error: 'Server configuration error: ADMIN_PASSWORD environment variable is not set.' })
-      };
+      correctPassword = process.env.ADMIN_PASSWORD || '@Archana//123';
     }
 
     if (password === correctPassword) {

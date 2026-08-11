@@ -21,7 +21,14 @@ export default function Admin() {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  // Password Change Form State
+  const [newAdminPassword, setNewAdminPassword] = useState('');
+  const [confirmAdminPassword, setConfirmAdminPassword] = useState('');
+  const [passwordChangeError, setPasswordChangeError] = useState('');
+  const [passwordChangeSuccess, setPasswordChangeSuccess] = useState('');
   
   // Current active product for Edit / Delete
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -186,6 +193,43 @@ export default function Admin() {
     setIsDeleteOpen(false);
   };
 
+  const openChangePassword = () => {
+    setNewAdminPassword('');
+    setConfirmAdminPassword('');
+    setPasswordChangeError('');
+    setPasswordChangeSuccess('');
+    setIsChangePasswordOpen(true);
+  };
+
+  const handleChangePasswordSubmit = async (e) => {
+    e.preventDefault();
+    setPasswordChangeError('');
+    setPasswordChangeSuccess('');
+
+    if (newAdminPassword.length < 4) {
+      setPasswordChangeError('Password must be at least 4 characters long.');
+      return;
+    }
+
+    if (newAdminPassword !== confirmAdminPassword) {
+      setPasswordChangeError('Passwords do not match.');
+      return;
+    }
+
+    setSubmitting(true);
+    const result = await api.changePassword(newAdminPassword);
+    setSubmitting(false);
+
+    if (result.success) {
+      setPasswordChangeSuccess('Password updated successfully!');
+      setTimeout(() => {
+        setIsChangePasswordOpen(false);
+      }, 2000);
+    } else {
+      setPasswordChangeError(result.error || 'Failed to update password.');
+    }
+  };
+
   // Stats calculation
   const stats = useMemo(() => {
     return {
@@ -267,6 +311,13 @@ export default function Admin() {
           >
             <Plus size={20} />
             <span>Add New Product</span>
+          </button>
+          <button 
+            onClick={openChangePassword}
+            className="btn-secondary py-3 px-4 flex items-center justify-center gap-2 rounded-2xl text-gray-600 hover:text-primary hover:border-primary/20 transition-all font-semibold"
+            title="Change Admin Password"
+          >
+            Change Password
           </button>
           <button 
             onClick={handleLogout}
@@ -640,6 +691,76 @@ export default function Admin() {
                 <span>Delete</span>
               </button>
             </div>
+          </div>
+        </div>
+      )}
+      {/* Change Password Modal */}
+      {isChangePasswordOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl overflow-hidden animate-scale-in">
+            <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+              <h2 className="text-xl font-bold text-gray-900">Change Admin Password</h2>
+              <button 
+                onClick={() => setIsChangePasswordOpen(false)}
+                className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={handleChangePasswordSubmit} className="p-6 space-y-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600">New Password</label>
+                <input
+                  type="password"
+                  required
+                  value={newAdminPassword}
+                  onChange={(e) => setNewAdminPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-sm font-semibold"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600">Confirm New Password</label>
+                <input
+                  type="password"
+                  required
+                  value={confirmAdminPassword}
+                  onChange={(e) => setConfirmAdminPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-sm font-semibold"
+                />
+              </div>
+
+              {passwordChangeError && (
+                <p className="text-xs text-red-500 font-semibold">{passwordChangeError}</p>
+              )}
+
+              {passwordChangeSuccess && (
+                <p className="text-xs text-green-600 font-bold flex items-center gap-1">
+                  <Check size={14} /> {passwordChangeSuccess}
+                </p>
+              )}
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsChangePasswordOpen(false)}
+                  className="px-5 py-2.5 border border-gray-200 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 transition-colors text-sm"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-primary py-2.5 px-6 rounded-xl flex items-center gap-2 font-bold text-sm"
+                >
+                  {submitting && <Loader2 className="animate-spin" size={16} />}
+                  <span>Update Password</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

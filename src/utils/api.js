@@ -54,6 +54,29 @@ export const api = {
   },
 
   /**
+   * Change Admin Password
+   */
+  async changePassword(newPassword) {
+    try {
+      const token = localStorage.getItem('admin_token');
+      const res = await fetch(`${API_BASE}/change-password`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ newPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to update password');
+      return { success: true, message: data.message };
+    } catch (err) {
+      console.error('Password change failed:', err.message);
+      return { success: false, error: err.message };
+    }
+  },
+
+  /**
    * Check if Admin is authenticated
    */
   isAuthenticated() {
