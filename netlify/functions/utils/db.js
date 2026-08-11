@@ -19,6 +19,8 @@ async function connectToDatabase() {
   const client = await MongoClient.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 3000,
+    connectTimeoutMS: 3000
   });
 
   // Extract database name (can be specified in URI, default to 'archumart')

@@ -17,6 +17,8 @@ async function connectToDatabase() {
   const client = await MongoClient.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 3000, // Timeout after 3s if server unreachable
+    connectTimeoutMS: 3000          // Timeout after 3s during connection
   });
 
   const dbName = new URL(uri).pathname.substring(1) || 'archumart';
