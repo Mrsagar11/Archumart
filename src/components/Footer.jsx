@@ -15,7 +15,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand Col */}
           <div className="lg:col-span-1">
-            <Link to="/" className="inline-block mb-4">
+            <Link to="/" className="flex items-center gap-2.5 mb-4">
+              <img src="/logo.jpg" alt="Archu Mart Logo" className="w-9 h-9 rounded-full object-cover border border-gray-100 shadow-sm" />
               <span className="text-2xl font-black tracking-tight gradient-text">ARCHU MART</span>
             </Link>
             <p className="text-gray-500 mb-6 leading-relaxed">

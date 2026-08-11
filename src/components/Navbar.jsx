@@ -35,7 +35,8 @@ export default function Navbar({ onSearchClick }) {
     }`}>
       <div className="container-main flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 z-50">
+        <Link to="/" className="flex items-center gap-2.5 z-50">
+          <img src="/logo.jpg" alt="Archu Mart Logo" className="w-9 h-9 rounded-full object-cover border border-gray-100 shadow-sm" />
           <span className="text-2xl font-black tracking-tight gradient-text">ARCHU MART</span>
         </Link>
 
