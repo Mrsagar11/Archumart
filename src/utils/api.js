@@ -1,7 +1,8 @@
 import { products as fallbackProducts } from '../data/products';
 
-// Base URL for serverless functions
-const API_BASE = '/.netlify/functions';
+const API_BASE = window.location.hostname.includes('netlify.app') 
+  ? '/.netlify/functions' 
+  : '/api';
 
 // Local storage key for fallback simulation
 const LOCAL_STORAGE_KEY = 'archu_mart_local_products';
