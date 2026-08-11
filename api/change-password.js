@@ -19,7 +19,13 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { newPassword } = req.body;
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {}
+    }
+    const newPassword = body ? body.newPassword : null;
 
     if (!newPassword || newPassword.trim().length < 4) {
       return res.status(400).json({ success: false, error: 'Password must be at least 4 characters long' });

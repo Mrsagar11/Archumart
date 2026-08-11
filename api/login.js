@@ -14,7 +14,13 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { password } = req.body;
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {}
+    }
+    const password = body ? body.password : null;
     let correctPassword = null;
 
     try {
