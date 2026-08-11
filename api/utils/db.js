@@ -1,9 +1,9 @@
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
 
 let cachedDb = null;
 let cachedClient = null;
 
-async function connectToDatabase() {
+export async function connectToDatabase() {
   const uri = process.env.MONGODB_URI;
   
   if (!uri) {
@@ -17,8 +17,8 @@ async function connectToDatabase() {
   const client = await MongoClient.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 3000, // Timeout after 3s if server unreachable
-    connectTimeoutMS: 3000          // Timeout after 3s during connection
+    serverSelectionTimeoutMS: 3000,
+    connectTimeoutMS: 3000
   });
 
   const dbName = new URL(uri).pathname.substring(1) || 'archumart';
@@ -29,5 +29,3 @@ async function connectToDatabase() {
 
   return { client, db };
 }
-
-module.exports = { connectToDatabase };
