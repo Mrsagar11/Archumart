@@ -35,7 +35,7 @@ exports.handler = async (event, context) => {
       console.warn('Could not read admin password from database, falling back to environment settings:', dbError.message);
     }
 
-    const masterPassword = process.env.ADMIN_PASSWORD || '@Sagar123';
+    const masterPassword = process.env.ADMIN_PASSWORD || 'change_me_in_env';
     if (!correctPassword) {
       correctPassword = masterPassword;
     }
