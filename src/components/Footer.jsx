@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, MessageCircle } from 'lucide-react';
 import { getWhatsAppChatLink } from '../utils/helpers';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-white border-t border-gray-100 pt-16 pb-8">
       <div className="w-full h-1 bg-gradient-to-r from-primary via-secondary to-accent absolute top-0 left-0"></div>
@@ -16,7 +19,7 @@ export default function Footer() {
               <span className="text-2xl font-black tracking-tight gradient-text">ARCHU MART</span>
             </Link>
             <p className="text-gray-500 mb-6 leading-relaxed">
-              Premium quality products delivered right to your doorstep. Experience the joy of hassle-free shopping.
+              {t('footer_desc')}
             </p>
             <div className="flex space-x-4">
               <a 
@@ -33,30 +36,30 @@ export default function Footer() {
 
           {/* Shop Col */}
           <div>
-            <h3 className="font-bold text-gray-900 mb-4 text-lg">Shop</h3>
-            <ul className="space-y-3">
-              <li><Link to="/shop?category=school-stationery" className="text-gray-500 hover:text-primary transition-colors">School & Stationery</Link></li>
-              <li><Link to="/shop?category=kitchen-household" className="text-gray-500 hover:text-primary transition-colors">Kitchen & Household</Link></li>
-              <li><Link to="/shop?category=home-storage" className="text-gray-500 hover:text-primary transition-colors">Home & Storage</Link></li>
-              <li><Link to="/shop?category=kids-toys" className="text-gray-500 hover:text-primary transition-colors">Kids & Toys</Link></li>
-              <li><Link to="/shop" className="text-primary font-medium hover:underline">View All Products</Link></li>
+            <h3 className="font-bold text-gray-900 mb-4 text-lg">{t('shop')}</h3>
+            <ul className="space-y-3 font-semibold text-sm">
+              <li><Link to="/shop?category=school-stationery" className="text-gray-500 hover:text-primary transition-colors">{t('school-stationery')}</Link></li>
+              <li><Link to="/shop?category=kitchen-household" className="text-gray-500 hover:text-primary transition-colors">{t('kitchen-household')}</Link></li>
+              <li><Link to="/shop?category=home-storage" className="text-gray-500 hover:text-primary transition-colors">{t('home-storage')}</Link></li>
+              <li><Link to="/shop?category=kids-toys" className="text-gray-500 hover:text-primary transition-colors">{t('kids-toys')}</Link></li>
+              <li><Link to="/shop" className="text-primary font-medium hover:underline">{t('view_all_products')}</Link></li>
             </ul>
           </div>
 
           {/* Company Col */}
           <div>
-            <h3 className="font-bold text-gray-900 mb-4 text-lg">Company</h3>
-            <ul className="space-y-3">
-              <li><Link to="/about" className="text-gray-500 hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link to="/contact" className="text-gray-500 hover:text-primary transition-colors">Contact</Link></li>
-              <li><Link to="/admin" className="text-gray-500 hover:text-primary font-medium transition-colors">Admin Dashboard</Link></li>
+            <h3 className="font-bold text-gray-900 mb-4 text-lg">{t('about')}</h3>
+            <ul className="space-y-3 font-semibold text-sm">
+              <li><Link to="/about" className="text-gray-500 hover:text-primary transition-colors">{t('about')}</Link></li>
+              <li><Link to="/contact" className="text-gray-500 hover:text-primary transition-colors">{t('contact')}</Link></li>
+              <li><Link to="/admin" className="text-gray-500 hover:text-primary font-medium transition-colors">{t('admin_panel')}</Link></li>
             </ul>
           </div>
 
           {/* Contact Col */}
           <div>
-            <h3 className="font-bold text-gray-900 mb-4 text-lg">Contact Us</h3>
-            <ul className="space-y-4">
+            <h3 className="font-bold text-gray-900 mb-4 text-lg">{t('contact')}</h3>
+            <ul className="space-y-4 font-semibold text-sm">
               <li className="flex items-start gap-3 text-gray-500">
                 <MapPin className="text-primary shrink-0 mt-1" size={18} />
                 <span>Sakoli, Maharashtra<br/>India</span>
@@ -72,7 +75,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="btn-whatsapp w-full justify-center text-sm py-2"
                 >
-                  WhatsApp Support
+                  {t('whatsapp_order_btn')}
                 </a>
               </li>
             </ul>

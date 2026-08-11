@@ -2,35 +2,38 @@ import React from 'react';
 import { Package, BadgeDollarSign, MapPin, MessageCircle } from 'lucide-react';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 
+import { useLanguage } from '../../context/LanguageContext';
+
 const TrustBadges = () => {
   const [ref, isVisible] = useScrollAnimation();
+  const { t } = useLanguage();
 
   const features = [
     {
       icon: Package,
-      title: "Wide Variety",
-      description: "Everyday products for the whole family.",
+      title: t('trust_variety_title'),
+      description: t('trust_variety_desc'),
       color: "bg-blue-100 text-blue-600",
       delay: "0s"
     },
     {
       icon: BadgeDollarSign,
-      title: "Affordable Prices",
-      description: "Quality products at reasonable prices.",
+      title: t('trust_prices_title'),
+      description: t('trust_prices_desc'),
       color: "bg-green-100 text-green-600",
       delay: "0.1s"
     },
     {
       icon: MapPin,
-      title: "Local & Trusted",
-      description: "Serving customers in Sakoli.",
+      title: t('trust_local_title'),
+      description: t('trust_local_desc'),
       color: "bg-purple-100 text-purple-600",
       delay: "0.2s"
     },
     {
       icon: MessageCircle,
-      title: "Easy WhatsApp Orders",
-      description: "Order products directly through WhatsApp.",
+      title: t('trust_whatsapp_title'),
+      description: t('trust_whatsapp_desc'),
       color: "bg-pink-100 text-pink-600",
       delay: "0.3s"
     }

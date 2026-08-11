@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, ShoppingCart, Menu, X, Phone, Heart, MapPin, ChevronDown, Lock } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import { getWhatsAppChatLink } from '../utils/helpers';
 
 export default function Navbar({ onSearchClick }) {
@@ -9,6 +10,7 @@ export default function Navbar({ onSearchClick }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { cartCount, toggleCart } = useCart();
+  const { language, changeLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,10 +21,10 @@ export default function Navbar({ onSearchClick }) {
   }, []);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Shop', path: '/shop' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: t('home'), path: '/' },
+    { name: t('shop'), path: '/shop' },
+    { name: t('about'), path: '/about' },
+    { name: t('contact'), path: '/contact' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -53,7 +55,16 @@ export default function Navbar({ onSearchClick }) {
         </div>
 
         {/* Right Icons */}
-        <div className="flex items-center gap-4 z-50">
+        <div className="flex items-center gap-3 z-50">
+          <button
+            onClick={() => changeLanguage(language === 'en' ? 'hi' : 'en')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-gray-150 text-xs font-extrabold text-gray-700 hover:bg-gray-100 hover:border-gray-300 transition-colors shadow-soft"
+            title={language === 'en' ? 'Switch to Hindi' : 'Switch to English'}
+          >
+            <span>🌐</span>
+            <span>{language === 'en' ? 'EN' : 'हिन्दी'}</span>
+          </button>
+
           <Link 
             to="/admin" 
             className="p-2 text-gray-700 hover:text-primary transition-colors"
@@ -91,7 +102,7 @@ export default function Navbar({ onSearchClick }) {
             className="hidden sm:flex btn-whatsapp text-sm py-2 px-4 items-center gap-2"
           >
             <Phone size={16} />
-            <span>Order</span>
+            <span>{t('order')}</span>
           </a>
 
           {/* Mobile Menu Toggle */}
@@ -127,8 +138,18 @@ export default function Navbar({ onSearchClick }) {
             rel="noopener noreferrer"
             className="btn-whatsapp mt-4 w-2/3 justify-center text-lg"
           >
-            Chat on WhatsApp
+            {t('whatsapp_order_btn')}
           </a>
+          <button
+            onClick={() => {
+              changeLanguage(language === 'en' ? 'hi' : 'en');
+              setIsMobileMenuOpen(false);
+            }}
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-bold text-gray-700 hover:bg-gray-100 transition-colors mt-2"
+          >
+            <span>🌐</span>
+            <span>{language === 'en' ? 'हिन्दी (Hindi)' : 'English (अंग्रेज़ी)'}</span>
+          </button>
         </div>
       </div>
     </nav>

@@ -4,11 +4,13 @@ import ProductGrid from '../ProductGrid';
 import { api } from '../../utils/api';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 const FeaturedProducts = () => {
   const [ref, isVisible] = useScrollAnimation();
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const fetchFeatured = async () => {
@@ -31,10 +33,10 @@ const FeaturedProducts = () => {
       <div className="container-main">
         <div className={`text-center mb-12 animate-on-scroll ${isVisible ? 'visible' : ''}`}>
           <h2 className="section-heading text-3xl md:text-4xl font-bold mb-4">
-            <span className="gradient-text">Popular at Archu Mart</span>
+            <span className="gradient-text">{t('popular_title')}</span>
           </h2>
           <p className="section-subtitle text-gray-600 max-w-2xl mx-auto text-lg">
-            Top picks loved by our customers
+            {t('popular_subtitle')}
           </p>
         </div>
 
@@ -54,7 +56,7 @@ const FeaturedProducts = () => {
             to="/shop" 
             className="inline-block px-8 py-3 rounded-full border-2 border-primary-400 text-primary-400 font-semibold hover:bg-primary-400 hover:text-white transition-colors duration-300"
           >
-            View All Products
+            {t('view_all_products')}
           </Link>
         </div>
       </div>

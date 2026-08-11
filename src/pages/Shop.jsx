@@ -5,6 +5,7 @@ import { CATEGORIES } from '../data/products';
 import { api } from '../utils/api';
 import ProductGrid from '../components/ProductGrid';
 import FilterBar from '../components/FilterBar';
+import { useLanguage } from '../context/LanguageContext';
 
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +17,7 @@ const Shop = () => {
   const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [sortBy, setSortBy] = useState('popular');
   const [displayCount, setDisplayCount] = useState(12);
+  const { t } = useLanguage();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -98,15 +100,15 @@ const Shop = () => {
   return (
     <div className="section-padding container-main">
       <div className="text-center mb-8">
-        <h1 className="section-heading">Shop Everything</h1>
-        <p className="section-subtitle">Discover our complete collection of everyday products</p>
+        <h1 className="section-heading">{t('shop_heading')}</h1>
+        <p className="section-subtitle">{t('shop_subtitle')}</p>
       </div>
 
       <div className="mb-8 max-w-2xl mx-auto relative">
         <div className="relative">
           <input
             type="text"
-            placeholder="Search products..."
+            placeholder={t('search_placeholder')}
             value={searchQuery}
             onChange={handleSearchChange}
             className="w-full px-6 py-4 pl-12 rounded-3xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm"
@@ -122,19 +124,19 @@ const Shop = () => {
       />
 
       <div className="flex justify-between items-center mb-6 text-sm text-gray-600 mt-6">
-        <p>Showing {displayedProducts.length} of {filteredAndSortedProducts.length} products</p>
+        <p>{t('showing_products', { count: displayedProducts.length, total: filteredAndSortedProducts.length })}</p>
         <div className="flex items-center gap-2">
-          <label htmlFor="sort" className="font-medium text-gray-700">Sort by:</label>
+          <label htmlFor="sort" className="font-semibold text-gray-700">{t('sort_by')}</label>
           <select 
             id="sort"
             value={sortBy}
             onChange={handleSortChange}
-            className="border border-gray-200 rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 py-1 pl-2 pr-8 text-sm"
+            className="border border-gray-200 rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 py-1.5 pl-2 pr-8 text-sm font-semibold"
           >
-            <option value="popular">Popularity</option>
-            <option value="newest">Newest Arrivals</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
+            <option value="popular">{t('sort_popularity')}</option>
+            <option value="newest">{t('sort_newest')}</option>
+            <option value="price-low">{t('sort_price_low')}</option>
+            <option value="price-high">{t('sort_price_high')}</option>
           </select>
         </div>
       </div>
@@ -146,13 +148,13 @@ const Shop = () => {
         </div>
       ) : filteredAndSortedProducts.length === 0 ? (
         <div className="text-center py-12">
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('no_products_found')}</h3>
           <p className="text-gray-500">Try adjusting your search or filter to find what you're looking for.</p>
           <button 
             onClick={() => { setSearchQuery(''); handleCategoryChange('All'); }}
             className="mt-4 text-primary font-medium hover:underline"
           >
-            Clear all filters
+            {t('clear_filters')}
           </button>
         </div>
       ) : (
@@ -163,9 +165,9 @@ const Shop = () => {
             <div className="text-center mt-12">
               <button 
                 onClick={() => setDisplayCount(prev => prev + 12)}
-                className="btn-secondary px-8 py-3 rounded-full"
+                className="btn-secondary px-8 py-3 rounded-full font-semibold shadow-sm hover:shadow transition-all"
               >
-                Load More Products
+                {t('load_more')}
               </button>
             </div>
           )}

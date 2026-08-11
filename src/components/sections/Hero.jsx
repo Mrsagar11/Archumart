@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBag, BookOpen, Home, Gift, Sparkles } from 'lucide-react';
 
+import { useLanguage } from '../../context/LanguageContext';
+
 const FloatingIcon = ({ Icon, className }) => (
   <div className={`absolute opacity-30 animate-[float_4s_ease-in-out_infinite] ${className}`}>
     <Icon size={48} className="text-white drop-shadow-md" />
@@ -9,6 +11,8 @@ const FloatingIcon = ({ Icon, className }) => (
 );
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden gradient-bg pt-24 pb-16">
       {/* Decorative floating elements */}
@@ -27,18 +31,17 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           
           <div className="flex-1 text-center lg:text-left space-y-8 animate-fade-in-up">
-            <h1 className="section-heading text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-gray-900 tracking-tight">
-              Everything You Need,<br />
-              <span className="gradient-text">All in One Place.</span>
+            <h1 className="section-heading text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900 tracking-tight">
+              {t('hero_title')}
             </h1>
             
             <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Discover everyday essentials, school supplies, household products, toys, gifts and more — all available at Archu Mart, Sakoli.
+              {t('hero_subtitle')}
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
               <Link to="/shop" className="btn-primary w-full sm:w-auto px-8 py-4 text-lg rounded-full font-medium transition-transform hover:scale-105 shadow-md">
-                Shop Now
+                {t('start_shopping')}
               </Link>
               <a 
                 href="https://wa.me/919356603316" 
@@ -46,7 +49,7 @@ const Hero = () => {
                 rel="noopener noreferrer"
                 className="btn-whatsapp w-full sm:w-auto px-8 py-4 text-lg rounded-full font-medium flex items-center justify-center gap-2 transition-transform hover:scale-105 shadow-md"
               >
-                Order on WhatsApp
+                {t('order_whatsapp')}
               </a>
             </div>
           </div>

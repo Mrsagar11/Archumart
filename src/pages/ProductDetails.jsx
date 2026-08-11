@@ -7,11 +7,13 @@ import { useWishlist } from '../context/WishlistContext';
 import QuantitySelector from '../components/QuantitySelector';
 import ProductGrid from '../components/ProductGrid';
 import { generateWhatsAppLink, formatPrice, getDiscountPercent } from '../utils/helpers';
+import { useLanguage } from '../context/LanguageContext';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const { t } = useLanguage();
   
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -89,11 +91,11 @@ const ProductDetails = () => {
     <div className="container-main section-padding pt-8">
       {/* Breadcrumbs */}
       <nav className="flex items-center text-sm text-gray-500 mb-8 overflow-x-auto whitespace-nowrap pb-2" aria-label="Breadcrumb">
-        <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+        <Link to="/" className="hover:text-primary transition-colors">{t('home')}</Link>
         <ChevronRight className="w-4 h-4 mx-2 flex-shrink-0" />
-        <Link to="/shop" className="hover:text-primary transition-colors">Shop</Link>
+        <Link to="/shop" className="hover:text-primary transition-colors">{t('shop')}</Link>
         <ChevronRight className="w-4 h-4 mx-2 flex-shrink-0" />
-        <Link to={`/shop?category=${encodeURIComponent(product.category)}`} className="hover:text-primary transition-colors">{product.category}</Link>
+        <Link to={`/shop?category=${encodeURIComponent(product.category)}`} className="hover:text-primary transition-colors">{t(product.category)}</Link>
         <ChevronRight className="w-4 h-4 mx-2 flex-shrink-0" />
         <span className="text-gray-900 font-medium truncate">{product.name}</span>
       </nav>
@@ -135,7 +137,7 @@ const ProductDetails = () => {
         {/* Product Info */}
         <div className="flex flex-col">
           <span className="text-sm font-medium text-secondary bg-secondary/10 px-3 py-1 rounded-full w-fit mb-4">
-            {product.category}
+            {t(product.category)}
           </span>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
           
@@ -161,7 +163,7 @@ const ProductDetails = () => {
           </div>
 
           <div className="mb-6 flex items-center gap-2 text-green-600 font-medium bg-green-50 w-fit px-3 py-1.5 rounded-lg border border-green-100">
-            <Check className="w-4 h-4" /> In Stock
+            <Check className="w-4 h-4" /> {t('in_stock')}
           </div>
 
           <p className="text-gray-600 mb-8 leading-relaxed">
@@ -169,30 +171,30 @@ const ProductDetails = () => {
           </p>
 
           <div className="mb-8">
-            <h3 className="font-semibold text-gray-900 mb-3">Quantity</h3>
+            <h3 className="font-semibold text-gray-900 mb-3">{t('quantity')}</h3>
             <QuantitySelector quantity={quantity} onQuantityChange={setQuantity} />
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <button 
               onClick={() => addToCart(product, quantity)}
-              className="btn-primary flex-1 py-4 flex items-center justify-center gap-2 text-lg rounded-xl"
+              className="btn-primary flex-1 py-4 flex items-center justify-center gap-2 text-lg rounded-xl font-bold"
             >
-              <ShoppingCart className="w-5 h-5" /> Add to Cart
+              <ShoppingCart className="w-5 h-5" /> {t('add_to_cart')}
             </button>
             <a 
               href={generateWhatsAppLink(product, quantity)}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp flex-1 py-4 flex items-center justify-center gap-2 text-lg rounded-xl"
+              className="btn-whatsapp flex-1 py-4 flex items-center justify-center gap-2 text-lg rounded-xl font-bold"
             >
-              <MessageCircle className="w-5 h-5" /> Order on WhatsApp
+              <MessageCircle className="w-5 h-5" /> {t('whatsapp_order_btn')}
             </a>
           </div>
 
           {/* Features */}
           <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-            <ul className="space-y-3">
+            <ul className="space-y-3 font-semibold">
               {[
                 "100% Quality Guarantee",
                 "Fast Local Delivery in Sakoli",
@@ -215,19 +217,19 @@ const ProductDetails = () => {
       <div className="mb-16">
         <div className="flex border-b border-gray-200">
           <button
-            className={`py-4 px-6 font-medium text-lg border-b-2 transition-colors ${activeTab === 'description' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+            className={`py-4 px-6 font-semibold text-lg border-b-2 transition-colors ${activeTab === 'description' ? 'border-primary text-primary font-bold' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
             onClick={() => setActiveTab('description')}
           >
-            Description
+            {t('description')}
           </button>
           <button
-            className={`py-4 px-6 font-medium text-lg border-b-2 transition-colors ${activeTab === 'why-buy' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+            className={`py-4 px-6 font-semibold text-lg border-b-2 transition-colors ${activeTab === 'why-buy' ? 'border-primary text-primary font-bold' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
             onClick={() => setActiveTab('why-buy')}
           >
             Why Buy From Us
           </button>
         </div>
-        <div className="py-8 text-gray-700 leading-relaxed">
+        <div className="py-8 text-gray-700 leading-relaxed font-semibold">
           {activeTab === 'description' && (
             <div className="prose max-w-none">
               <p className="mb-4">
@@ -240,7 +242,7 @@ const ProductDetails = () => {
           )}
           {activeTab === 'why-buy' && (
             <div className="space-y-4">
-              <p className="font-medium text-gray-900">Why choose Archu Mart in Sakoli?</p>
+              <p className="font-bold text-gray-900">Why choose Archu Mart in Sakoli?</p>
               <ul className="list-disc pl-5 space-y-2">
                 <li><strong>Local Trust:</strong> We are a trusted local business serving the Sakoli community for years.</li>
                 <li><strong>Quality Assurance:</strong> Every product on our shelves is verified for quality and freshness.</li>
@@ -256,9 +258,9 @@ const ProductDetails = () => {
       {relatedProducts.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">You Might Also Like</h2>
-            <Link to={`/shop?category=${encodeURIComponent(product.category)}`} className="text-primary font-medium flex items-center gap-1 hover:underline">
-              View All <ChevronRight className="w-4 h-4" />
+            <h2 className="text-2xl font-bold text-gray-900">{t('related_products')}</h2>
+            <Link to={`/shop?category=${encodeURIComponent(product.category)}`} className="text-primary font-bold flex items-center gap-1 hover:underline">
+              {t('view_all_products')} <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
           <ProductGrid products={relatedProducts} />

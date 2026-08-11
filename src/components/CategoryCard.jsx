@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const CategoryCard = ({ category }) => {
+  const { t } = useLanguage();
+
   if (!category) return null;
 
   return (
@@ -19,15 +22,15 @@ const CategoryCard = ({ category }) => {
         </div>
         
         <h3 className="font-bold text-lg text-gray-900 mb-1">
-          {category.name}
+          {t(category.id)}
         </h3>
         
         <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-          {category.description || `Explore our ${category.name} collection`}
+          {t(`${category.id}_desc`, {}, category.description)}
         </p>
         
         <div className="mt-auto flex items-center text-primary font-medium text-sm">
-          <span className="mr-2 group-hover:mr-3 transition-all">Shop Now</span>
+          <span className="mr-2 group-hover:mr-3 transition-all">{t('shop_now')}</span>
           <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
         </div>
       </div>

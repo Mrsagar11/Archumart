@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag, MessageCircle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { generateCartWhatsAppLink, formatPrice } from '../utils/helpers';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function CartDrawer() {
   const { items: cartItems, isOpen: isCartOpen, toggleCart, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { t } = useLanguage();
 
   // Prevent background scrolling when cart is open
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function CartDrawer() {
         <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
           <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900">
             <ShoppingBag className="text-primary" size={24} />
-            Your Cart <span className="text-sm font-medium bg-gray-100 px-2 py-1 rounded-full text-gray-600">{cartItems.length}</span>
+            {t('your_cart')} <span className="text-sm font-medium bg-gray-100 px-2 py-1 rounded-full text-gray-600">{cartItems.length}</span>
           </h2>
           <button 
             onClick={toggleCart}
@@ -52,13 +54,13 @@ export default function CartDrawer() {
               <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mb-4">
                 <ShoppingBag size={48} />
               </div>
-              <h3 className="text-lg font-bold text-gray-900">Your cart is empty</h3>
-              <p className="text-gray-500">Looks like you haven't added anything yet.</p>
+              <h3 className="text-lg font-bold text-gray-900">{t('cart_empty')}</h3>
+              <p className="text-gray-500">{t('cart_empty_desc')}</p>
               <button 
                 onClick={toggleCart}
-                className="btn-primary mt-4"
+                className="btn-primary mt-4 px-6 py-2.5 rounded-xl font-semibold"
               >
-                Start Shopping
+                {t('start_shopping')}
               </button>
             </div>
           ) : (
@@ -116,7 +118,7 @@ export default function CartDrawer() {
         {cartItems.length > 0 && (
           <div className="border-t border-gray-100 p-6 bg-gray-50">
             <div className="flex justify-between items-center mb-6">
-              <span className="text-gray-600 font-medium">Subtotal</span>
+              <span className="text-gray-600 font-medium">{t('subtotal')}</span>
               <span className="text-xl font-bold text-gray-900">{formatPrice(cartTotal)}</span>
             </div>
             
@@ -129,13 +131,13 @@ export default function CartDrawer() {
                 onClick={toggleCart}
               >
                 <MessageCircle size={20} />
-                Order on WhatsApp
+                {t('whatsapp_order_btn')}
               </a>
               <button 
                 onClick={toggleCart}
                 className="w-full py-3.5 text-gray-600 font-medium hover:bg-gray-200 rounded-xl transition-colors"
               >
-                Continue Shopping
+                {t('continue_shopping')}
               </button>
             </div>
           </div>

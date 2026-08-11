@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
+import { useLanguage } from '../../context/LanguageContext';
 
 const PromoBanner = () => {
   const [ref, isVisible] = useScrollAnimation();
+  const { t } = useLanguage();
 
   return (
     <section className="section-padding bg-white" ref={ref}>
@@ -20,10 +22,10 @@ const PromoBanner = () => {
 
           <div className="relative z-10 max-w-3xl mx-auto space-y-6">
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
-              Need Something for Home, School or Everyday Life?
+              {t('promo_title')}
             </h2>
             <p className="text-lg md:text-xl text-gray-800 font-medium">
-              Explore our collection or simply message us on WhatsApp.
+              {t('promo_desc')}
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
@@ -34,13 +36,13 @@ const PromoBanner = () => {
                 className="btn-whatsapp w-full sm:w-auto px-8 py-4 rounded-full text-lg font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
                 <MessageCircle size={24} />
-                Order on WhatsApp
+                {t('order_whatsapp')}
               </a>
               <Link 
                 to="/shop" 
                 className="btn-secondary w-full sm:w-auto px-8 py-4 rounded-full text-lg font-semibold bg-white text-primary-400 hover:bg-gray-50 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
               >
-                Browse Products
+                {t('browse_products')}
               </Link>
             </div>
           </div>

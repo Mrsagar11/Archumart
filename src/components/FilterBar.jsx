@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const FilterBar = ({ 
   categories = [], 
@@ -10,6 +11,7 @@ const FilterBar = ({
   productCount = 0
 }) => {
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const { language, t } = useLanguage();
 
   const sortOptions = [
     { value: 'default', label: 'Default Sorting' },
@@ -25,19 +27,36 @@ const FilterBar = ({
         {/* Categories Horizontal Scroll */}
         <div className="flex-grow overflow-x-auto pb-2 lg:pb-0 hide-scrollbar">
           <div className="flex items-center space-x-2 whitespace-nowrap">
-            {categories.map((cat) => (
-              <button
-                key={typeof cat === 'string' ? cat : cat.id}
-                onClick={() => onCategoryChange && onCategoryChange(typeof cat === 'string' ? cat : cat.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeCategory === (typeof cat === 'string' ? cat : cat.id)
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
-                }`}
-              >
-                {typeof cat === 'string' ? cat : cat.name}
-              </button>
-            ))}
+            {/* Prepend All option */}
+            <button
+              onClick={() => onCategoryChange && onCategoryChange('All')}
+              className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                activeCategory === 'All'
+                  ? 'bg-primary-400 text-white shadow-md shadow-primary/20 scale-105'
+                  : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:scale-102'
+              }`}
+            >
+              {language === 'en' ? 'All' : 'सभी'}
+            </button>
+
+            {categories.map((cat) => {
+              const catId = typeof cat === 'string' ? cat : cat.id;
+              const catName = typeof cat === 'string' ? cat : cat.name;
+              const isActive = activeCategory === catId;
+              return (
+                <button
+                  key={catId}
+                  onClick={() => onCategoryChange && onCategoryChange(catId)}
+                  className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                    isActive
+                      ? 'bg-primary-400 text-white shadow-md shadow-primary/20 scale-105'
+                      : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:scale-102'
+                  }`}
+                >
+                  {t(catId, {}, catName)}
+                </button>
+              );
+            })}
           </div>
         </div>
 

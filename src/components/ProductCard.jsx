@@ -6,9 +6,12 @@ import { useWishlist } from '../context/WishlistContext';
 import { formatPrice, getDiscountPercent, generateWhatsAppLink } from '../utils/helpers';
 
 
+import { useLanguage } from '../context/LanguageContext';
+
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
+  const { t } = useLanguage();
 
   const isWishlisted = isInWishlist(product.id);
   const discount = getDiscountPercent(product.originalPrice, product.price);
@@ -75,7 +78,7 @@ const ProductCard = ({ product }) => {
       {/* Content Section */}
       <div className="p-4 flex flex-col flex-grow">
         <Link to={`/shop?category=${product.category}`} className="text-xs text-muted font-medium mb-1 hover:text-primary transition-colors">
-          {product.category}
+          {t(product.category)}
         </Link>
         
         <Link to={`/product/${product.id}`} className="mb-2 flex-grow">
@@ -115,16 +118,16 @@ const ProductCard = ({ product }) => {
         <div className="flex items-center space-x-2 mt-auto">
           <button
             onClick={handleAddToCart}
-            className="flex-grow btn-primary py-2 px-3 text-sm flex items-center justify-center gap-1.5 rounded-xl bg-primary text-white hover:bg-primary/90 transition-colors"
+            className="flex-grow btn-primary py-2.5 px-3 text-sm flex items-center justify-center gap-1.5 rounded-xl font-semibold shadow-sm hover:shadow transition-all"
           >
             <ShoppingCart size={16} />
-            <span>Add to Cart</span>
+            <span>{t('add_to_cart')}</span>
           </button>
           
           <button
             onClick={handleWhatsAppClick}
             className="p-2.5 rounded-xl bg-green-100 text-green-600 hover:bg-green-500 hover:text-white transition-colors"
-            title="Inquire on WhatsApp"
+            title={t('inquire_whatsapp')}
           >
             <MessageCircle size={18} />
           </button>
