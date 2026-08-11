@@ -31,8 +31,10 @@ export const api = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
       });
-      if (!res.ok) throw new Error('Incorrect password');
       const data = await res.json();
+      if (!res.ok) {
+        return { success: false, error: data.error || 'Incorrect password' };
+      }
       localStorage.setItem('admin_token', data.token);
       return { success: true };
     } catch (err) {
@@ -69,12 +71,11 @@ export const api = {
         body: JSON.stringify({ newPassword }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to update password');
+      if (!res.ok) throw new Error(data.message || data.error || 'Failed to update password');
       return { success: true, message: data.message };
     } catch (err) {
-      console.warn('Backend API offline or failed, saving password locally:', err.message);
-      localStorage.setItem('local_admin_password', newPassword);
-      return { success: true, message: 'Saved locally (API Offline)' };
+      console.error('Password change failed:', err.message);
+      return { success: false, error: err.message };
     }
   },
 
