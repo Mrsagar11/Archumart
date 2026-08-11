@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       console.warn('Could not read admin password from database:', dbError.message);
     }
 
-    const masterPassword = process.env.ADMIN_PASSWORD || '@Archana//123';
+    const masterPassword = process.env.ADMIN_PASSWORD || '@Sagar123';
     if (!correctPassword) {
       correctPassword = masterPassword;
     }
