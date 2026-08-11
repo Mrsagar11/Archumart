@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ShoppingBag, Heart, Smile, MapPin, Truck, MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
