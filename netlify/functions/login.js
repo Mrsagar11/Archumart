@@ -16,7 +16,15 @@ exports.handler = async (event, context) => {
 
   try {
     const { password } = JSON.parse(event.body);
-    const correctPassword = process.env.ADMIN_PASSWORD || '@Archana//123';
+    const correctPassword = process.env.ADMIN_PASSWORD;
+
+    if (!correctPassword) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ success: false, error: 'Server configuration error: ADMIN_PASSWORD environment variable is not set.' })
+      };
+    }
 
     if (password === correctPassword) {
       return { 

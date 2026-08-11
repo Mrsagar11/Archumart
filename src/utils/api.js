@@ -37,7 +37,8 @@ export const api = {
       return { success: true };
     } catch (err) {
       console.warn('Backend API offline or failed, using local verification fallback:', err.message);
-      if (password === '@Archana//123') {
+      const localPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin';
+      if (password === localPassword) {
         localStorage.setItem('admin_token', 'archumart-admin-token-session');
         return { success: true };
       }
