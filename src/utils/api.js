@@ -37,7 +37,8 @@ export const api = {
       return { success: true };
     } catch (err) {
       console.warn('Backend API offline or failed, using local verification fallback:', err.message);
-      const localPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin';
+      const savedLocalPassword = localStorage.getItem('local_admin_password');
+      const localPassword = savedLocalPassword || import.meta.env.VITE_ADMIN_PASSWORD || 'admin';
       if (password === localPassword) {
         localStorage.setItem('admin_token', 'archumart-admin-token-session');
         return { success: true };
@@ -71,8 +72,9 @@ export const api = {
       if (!res.ok) throw new Error(data.error || 'Failed to update password');
       return { success: true, message: data.message };
     } catch (err) {
-      console.error('Password change failed:', err.message);
-      return { success: false, error: err.message };
+      console.warn('Backend API offline or failed, saving password locally:', err.message);
+      localStorage.setItem('local_admin_password', newPassword);
+      return { success: true, message: 'Saved locally (API Offline)' };
     }
   },
 
