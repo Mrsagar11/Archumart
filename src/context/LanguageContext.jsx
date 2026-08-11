@@ -6,11 +6,14 @@ const LanguageContext = createContext(null);
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(() => {
     const saved = localStorage.getItem('archu_language');
-    return saved === 'hi' ? 'hi' : 'en';
+    if (saved === 'mr' || saved === 'hi' || saved === 'en') {
+      return saved;
+    }
+    return 'en';
   });
 
   const changeLanguage = (lang) => {
-    if (lang === 'hi' || lang === 'en') {
+    if (lang === 'mr' || lang === 'hi' || lang === 'en') {
       setLanguage(lang);
       localStorage.setItem('archu_language', lang);
     }

@@ -56,14 +56,36 @@ export default function Navbar({ onSearchClick }) {
 
         {/* Right Icons */}
         <div className="flex items-center gap-3 z-50">
-          <button
-            onClick={() => changeLanguage(language === 'en' ? 'hi' : 'en')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-gray-150 text-xs font-extrabold text-gray-700 hover:bg-gray-100 hover:border-gray-300 transition-colors shadow-soft"
-            title={language === 'en' ? 'Switch to Hindi' : 'Switch to English'}
-          >
-            <span>🌐</span>
-            <span>{language === 'en' ? 'EN' : 'हिन्दी'}</span>
-          </button>
+          {/* Language Selector Dropdown */}
+          <div className="relative group">
+            <button
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-gray-150 text-xs font-extrabold text-gray-700 hover:bg-gray-100 hover:border-gray-300 transition-colors shadow-soft"
+              title="Select Language"
+            >
+              <span>🌐</span>
+              <span>{language === 'en' ? 'EN' : language === 'hi' ? 'हिन्दी' : 'मराठी'}</span>
+            </button>
+            <div className="absolute right-0 mt-1 w-28 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50 hidden group-hover:block transition-all animate-scale-in">
+              <button
+                onClick={() => changeLanguage('en')}
+                className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-gray-50 transition-colors ${language === 'en' ? 'text-primary' : 'text-gray-700'}`}
+              >
+                English
+              </button>
+              <button
+                onClick={() => changeLanguage('hi')}
+                className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-gray-50 transition-colors ${language === 'hi' ? 'text-primary' : 'text-gray-700'}`}
+              >
+                हिन्दी
+              </button>
+              <button
+                onClick={() => changeLanguage('mr')}
+                className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-gray-50 transition-colors ${language === 'mr' ? 'text-primary' : 'text-gray-700'}`}
+              >
+                मराठी
+              </button>
+            </div>
+          </div>
 
           <Link 
             to="/admin" 
@@ -140,16 +162,29 @@ export default function Navbar({ onSearchClick }) {
           >
             {t('whatsapp_order_btn')}
           </a>
-          <button
-            onClick={() => {
-              changeLanguage(language === 'en' ? 'hi' : 'en');
-              setIsMobileMenuOpen(false);
-            }}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-bold text-gray-700 hover:bg-gray-100 transition-colors mt-2"
-          >
-            <span>🌐</span>
-            <span>{language === 'en' ? 'हिन्दी (Hindi)' : 'English (अंग्रेज़ी)'}</span>
-          </button>
+          <div className="flex flex-col gap-2 mt-6 w-3/4">
+            <span className="text-[10px] font-extrabold text-gray-400 text-center uppercase tracking-wider">🌐 Select Language / भाषा निवडा</span>
+            <div className="grid grid-cols-3 gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200">
+              <button
+                onClick={() => { changeLanguage('en'); setIsMobileMenuOpen(false); }}
+                className={`py-2 rounded-lg text-xs font-extrabold transition-all ${language === 'en' ? 'bg-primary-400 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => { changeLanguage('hi'); setIsMobileMenuOpen(false); }}
+                className={`py-2 rounded-lg text-xs font-extrabold transition-all ${language === 'hi' ? 'bg-primary-400 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
+              >
+                हिन्दी
+              </button>
+              <button
+                onClick={() => { changeLanguage('mr'); setIsMobileMenuOpen(false); }}
+                className={`py-2 rounded-lg text-xs font-extrabold transition-all ${language === 'mr' ? 'bg-primary-400 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
+              >
+                मराठी
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
