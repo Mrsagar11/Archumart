@@ -12,8 +12,8 @@ const FeaturedCategories = () => {
     <section className="section-padding bg-white" ref={ref}>
       <div className="container-main">
         <div className={`text-center mb-12 animate-on-scroll ${isVisible ? 'visible' : ''}`}>
-          <h2 className="section-heading text-3xl md:text-4xl font-bold mb-4">{t('cat_featured')}</h2>
-          <p className="section-subtitle text-gray-600 max-w-2xl mx-auto text-lg">{t('cat_featured_sub')}</p>
+          <h2 className="section-heading font-display text-gray-900 mb-4">{t('cat_featured')}</h2>
+          <p className="section-subtitle text-gray-600 max-w-2xl mx-auto">{t('cat_featured_sub')}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

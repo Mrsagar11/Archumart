@@ -21,19 +21,18 @@ const FilterBar = ({
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-8">
+    <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-4 mb-8">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         
         {/* Categories Horizontal Scroll */}
-        <div className="flex-grow overflow-x-auto pb-2 lg:pb-0 hide-scrollbar">
+        <div className="flex-grow overflow-x-auto pb-2 lg:pb-0 no-scrollbar">
           <div className="flex items-center space-x-2 whitespace-nowrap">
-            {/* Prepend All option */}
             <button
               onClick={() => onCategoryChange && onCategoryChange('All')}
               className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                 activeCategory === 'All'
-                  ? 'bg-primary-400 text-white shadow-md shadow-primary/20 scale-105'
-                  : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:scale-102'
+                  ? 'bg-primary-500 text-white shadow-sm'
+                  : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
               }`}
             >
               {language === 'en' ? 'All' : 'सभी'}
@@ -49,8 +48,8 @@ const FilterBar = ({
                   onClick={() => onCategoryChange && onCategoryChange(catId)}
                   className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                     isActive
-                      ? 'bg-primary-400 text-white shadow-md shadow-primary/20 scale-105'
-                      : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:scale-102'
+                      ? 'bg-primary-500 text-white shadow-sm'
+                      : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
                   }`}
                 >
                   {t(catId, {}, catName)}
@@ -67,7 +66,7 @@ const FilterBar = ({
           </div>
 
           <div className="flex items-center space-x-2">
-            <button className="flex items-center space-x-2 text-sm text-gray-700 font-medium bg-gray-50 hover:bg-gray-100 px-3 py-2 rounded-xl transition-colors lg:hidden">
+            <button className="flex items-center space-x-2 text-sm text-gray-700 font-medium bg-gray-50 hover:bg-gray-100 px-3 py-2 rounded-xl transition-colors lg:hidden" aria-label="Open filters">
               <SlidersHorizontal size={16} />
               <span>Filters</span>
             </button>
@@ -77,6 +76,8 @@ const FilterBar = ({
               <button 
                 onClick={() => setIsSortOpen(!isSortOpen)}
                 className="flex items-center space-x-2 text-sm text-gray-700 font-medium bg-gray-50 hover:bg-gray-100 px-4 py-2 rounded-xl transition-colors min-w-[160px] justify-between"
+                aria-expanded={isSortOpen}
+                aria-haspopup="listbox"
               >
                 <span className="truncate">
                   {sortOptions.find(opt => opt.value === sortBy)?.label || 'Sort by'}
@@ -86,20 +87,24 @@ const FilterBar = ({
 
               {isSortOpen && (
                 <>
-                  <div 
-                    className="fixed inset-0 z-10" 
+                  <button
+                    type="button"
+                    className="fixed inset-0 z-10 cursor-default"
                     onClick={() => setIsSortOpen(false)}
-                  ></div>
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-20">
+                    aria-label="Close sort menu"
+                  />
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-card border border-gray-100 py-1 z-20" role="listbox">
                     {sortOptions.map((option) => (
                       <button
                         key={option.value}
+                        role="option"
+                        aria-selected={sortBy === option.value}
                         onClick={() => {
                           if (onSortChange) onSortChange(option.value);
                           setIsSortOpen(false);
                         }}
                         className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${
-                          sortBy === option.value ? 'text-primary font-medium bg-pink-50/50' : 'text-gray-700'
+                          sortBy === option.value ? 'text-primary-500 font-medium bg-primary-50/50' : 'text-gray-700'
                         }`}
                       >
                         {option.label}

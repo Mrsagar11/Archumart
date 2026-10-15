@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, ArrowRight } from 'lucide-react';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -11,38 +11,36 @@ const PromoBanner = () => {
   return (
     <section className="section-padding bg-white" ref={ref}>
       <div className="container-main">
-        <div className={`relative w-full rounded-3xl overflow-hidden gradient-bg-warm p-10 md:p-16 text-center animate-on-scroll ${isVisible ? 'visible' : ''}`}>
-          
-          {/* Decorative shapes */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-             <div className="absolute -top-10 -left-10 w-40 h-40 bg-white/20 rounded-full blur-xl mix-blend-overlay"></div>
-             <div className="absolute bottom-10 -right-10 w-60 h-60 bg-white/20 rounded-full blur-2xl mix-blend-overlay"></div>
-             <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-pink-200/30 rounded-full blur-md"></div>
-          </div>
+        <div className={`relative w-full rounded-3xl overflow-hidden bg-gray-900 p-10 md:p-16 text-center animate-on-scroll ${isVisible ? 'visible' : ''}`}>
+          {/* Clean geometric pattern — no blur blobs */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(244,63,94,0.15),transparent)]" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.02] rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/[0.02] rounded-full translate-y-1/2 -translate-x-1/2" />
 
           <div className="relative z-10 max-w-3xl mx-auto space-y-6">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-white leading-tight text-balance">
               {t('promo_title')}
             </h2>
-            <p className="text-lg md:text-xl text-gray-800 font-medium">
+            <p className="text-lg md:text-xl text-gray-300 font-medium">
               {t('promo_desc')}
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <a 
                 href="https://wa.me/919356603316" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn-whatsapp w-full sm:w-auto px-8 py-4 rounded-full text-lg font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
+                className="btn-whatsapp w-full sm:w-auto px-8 py-4 rounded-full text-lg font-semibold flex items-center justify-center gap-2"
               >
-                <MessageCircle size={24} />
+                <MessageCircle size={22} />
                 {t('order_whatsapp')}
               </a>
               <Link 
                 to="/shop" 
-                className="btn-secondary w-full sm:w-auto px-8 py-4 rounded-full text-lg font-semibold bg-white text-primary-400 hover:bg-gray-50 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
+                className="w-full sm:w-auto px-8 py-4 rounded-full text-lg font-semibold bg-white/10 text-white hover:bg-white/20 transition-colors flex items-center justify-center gap-2 border border-white/20"
               >
                 {t('browse_products')}
+                <ArrowRight size={20} />
               </Link>
             </div>
           </div>

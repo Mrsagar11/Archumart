@@ -24,24 +24,19 @@
 
 @layer components {
   .gradient-bg {
-    background: linear-gradient(135deg, #FCE7F3 0%, #EDE9FE 40%, #DBEAFE 100%);
+    background: linear-gradient(160deg, #FFF5F7 0%, #FFF0F3 50%, #FEF2F4 100%);
   }
 
   .gradient-bg-warm {
-    background: linear-gradient(135deg, #FFF1F3 0%, #FEF3C7 50%, #FCE7F3 100%);
+    background: linear-gradient(160deg, #FFF5F7 0%, #FFFBEB 50%, #FFF0F3 100%);
   }
 
-  .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #FF6B8A, #7C6CF2);
+  .brand-text {
+    @apply text-primary-500 font-display font-extrabold;
   }
 
-  .glass {
-    @apply bg-white/80 backdrop-blur-lg;
-  }
-
-  .glass-card {
-    @apply bg-white/60 backdrop-blur-md border border-white/50 shadow-soft;
+  .card-surface {
+    @apply bg-white border border-gray-100 shadow-soft;
   }
 
   .card-hover {
@@ -53,18 +48,18 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary-400 text-white font-semibold rounded-2xl
-           hover:bg-primary-500 active:scale-[0.98] transition-all duration-200 shadow-soft;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary-500 text-white font-semibold rounded-2xl
+           hover:bg-primary-600 active:scale-[0.98] transition-all duration-200 shadow-sm focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2;
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-dark font-semibold rounded-2xl
-           border border-gray-200 hover:border-primary-300 hover:text-primary-500 active:scale-[0.98] transition-all duration-200;
+           border border-gray-200 hover:border-primary-300 hover:text-primary-500 active:scale-[0.98] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2;
   }
 
   .btn-whatsapp {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-500 text-white font-semibold rounded-2xl
-           hover:bg-green-600 active:scale-[0.98] transition-all duration-200 shadow-soft;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-whatsapp text-white font-semibold rounded-2xl
+           hover:bg-whatsapp-hover active:scale-[0.98] transition-all duration-200 shadow-sm focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2;
   }
 
   .section-padding {
@@ -76,7 +71,7 @@
   }
 
   .section-heading {
-    @apply text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight;
+    @apply text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold tracking-tight;
   }
 
   .section-subtitle {
@@ -92,18 +87,18 @@
   }
 
   .badge-new {
-    @apply badge bg-secondary-100 text-secondary-600;
+    @apply badge bg-emerald-50 text-emerald-700;
   }
 
   .badge-bestseller {
-    @apply badge bg-accent-100 text-accent-700;
+    @apply badge bg-amber-50 text-amber-700;
   }
 
-  /* Scroll animations */
+  /* Scroll animations — respects prefers-reduced-motion */
   .animate-on-scroll {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
   }
 
   .animate-on-scroll.visible {
@@ -111,17 +106,25 @@
     transform: translateY(0);
   }
 
-  /* Product image hover */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-on-scroll {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* Product image hover — subtle shadow shift, no scale */
   .product-image-wrapper {
     @apply overflow-hidden rounded-2xl;
   }
 
   .product-image-wrapper img {
-    @apply transition-transform duration-500 ease-out;
+    @apply transition-all duration-500 ease-out;
   }
 
   .product-image-wrapper:hover img {
-    @apply scale-110;
+    @apply brightness-105;
   }
 
   /* Hide scrollbar */
@@ -131,6 +134,16 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* Number input arrows hidden */
+  .hide-arrows::-webkit-outer-spin-button,
+  .hide-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .hide-arrows {
+    -moz-appearance: textfield;
   }
 }
 

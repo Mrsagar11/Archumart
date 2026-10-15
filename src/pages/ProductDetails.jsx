@@ -52,7 +52,7 @@ const ProductDetails = () => {
   if (loading) {
     return (
       <div className="container-main section-padding text-center py-32 flex flex-col items-center justify-center text-gray-500">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mb-4"></div>
+        <div className="w-10 h-10 border-2 border-gray-200 border-t-primary-500 rounded-full animate-spin mb-4" />
         <p className="text-sm font-medium">Fetching details...</p>
       </div>
     );
@@ -61,8 +61,8 @@ const ProductDetails = () => {
   if (!product) {
     return (
       <div className="container-main section-padding text-center py-24">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Product Not Found</h2>
-        <p className="text-gray-600 mb-8">We couldn't find the product you're looking for.</p>
+        <h2 className="text-3xl font-display font-bold text-gray-900 mb-4">Product Not Found</h2>
+        <p className="text-gray-600 mb-8">We couldn&rsquo;t find the product you&rsquo;re looking for.</p>
         <Link to="/shop" className="btn-primary inline-flex items-center gap-2">
           <ArrowLeft className="w-5 h-5" /> Back to Shop
         </Link>
@@ -91,23 +91,23 @@ const ProductDetails = () => {
     <div className="container-main section-padding pt-8">
       {/* Breadcrumbs */}
       <nav className="flex items-center text-sm text-gray-500 mb-8 overflow-x-auto whitespace-nowrap pb-2" aria-label="Breadcrumb">
-        <Link to="/" className="hover:text-primary transition-colors">{t('home')}</Link>
-        <ChevronRight className="w-4 h-4 mx-2 flex-shrink-0" />
-        <Link to="/shop" className="hover:text-primary transition-colors">{t('shop')}</Link>
-        <ChevronRight className="w-4 h-4 mx-2 flex-shrink-0" />
-        <Link to={`/shop?category=${encodeURIComponent(product.category)}`} className="hover:text-primary transition-colors">{t(product.category)}</Link>
-        <ChevronRight className="w-4 h-4 mx-2 flex-shrink-0" />
+        <Link to="/" className="hover:text-primary-500 transition-colors">{t('home')}</Link>
+        <ChevronRight className="w-4 h-4 mx-2 flex-shrink-0" aria-hidden="true" />
+        <Link to="/shop" className="hover:text-primary-500 transition-colors">{t('shop')}</Link>
+        <ChevronRight className="w-4 h-4 mx-2 flex-shrink-0" aria-hidden="true" />
+        <Link to={`/shop?category=${encodeURIComponent(product.category)}`} className="hover:text-primary-500 transition-colors">{t(product.category)}</Link>
+        <ChevronRight className="w-4 h-4 mx-2 flex-shrink-0" aria-hidden="true" />
         <span className="text-gray-900 font-medium truncate">{product.name}</span>
       </nav>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 mb-16">
         {/* Product Image */}
         <div className="relative group">
-          <div className="aspect-square bg-gray-100 rounded-3xl overflow-hidden shadow-soft relative product-image-wrapper">
+          <div className="aspect-square bg-gray-50 rounded-2xl overflow-hidden shadow-soft border border-gray-100 product-image-wrapper">
             <img 
               src={product.image} 
               alt={product.name} 
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover transition-all duration-500 group-hover:brightness-105"
             />
             {product.isNew && (
               <div className="absolute top-4 left-4 badge-new">New</div>
@@ -119,14 +119,14 @@ const ProductDetails = () => {
           <div className="absolute top-4 right-4 flex flex-col gap-2">
             <button 
               onClick={handleWishlistToggle}
-              className={`p-3 rounded-full bg-white/80 backdrop-blur shadow-sm hover:bg-white transition-colors ${isWishlisted ? 'text-primary' : 'text-gray-600'}`}
-              aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+              className={`p-3 rounded-full bg-white shadow-soft hover:bg-gray-50 transition-colors ${isWishlisted ? 'text-primary-500' : 'text-gray-500'}`}
+              aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
             >
               <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
             </button>
             <button 
               onClick={handleShare}
-              className="p-3 rounded-full bg-white/80 backdrop-blur shadow-sm text-gray-600 hover:bg-white transition-colors"
+              className="p-3 rounded-full bg-white shadow-soft text-gray-500 hover:bg-gray-50 transition-colors"
               aria-label="Share product"
             >
               <Share2 className="w-5 h-5" />
@@ -136,33 +136,37 @@ const ProductDetails = () => {
 
         {/* Product Info */}
         <div className="flex flex-col">
-          <span className="text-sm font-medium text-secondary bg-secondary/10 px-3 py-1 rounded-full w-fit mb-4">
+          <span className="text-sm font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full w-fit mb-4">
             {t(product.category)}
           </span>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">{product.name}</h1>
           
-          <div className="flex items-center gap-4 mb-6">
-            <div className="flex items-center text-accent">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className={`w-5 h-5 ${i < Math.floor(product.rating || 4.5) ? 'fill-current' : ''}`} />
-              ))}
+          {product.rating && (
+            <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center text-amber-400">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className={`w-5 h-5 ${i < Math.floor(product.rating) ? 'fill-current' : 'text-gray-200 fill-gray-200'}`} />
+                ))}
+              </div>
+              {product.reviews && (
+                <span className="text-sm text-gray-500">({product.reviews} reviews)</span>
+              )}
             </div>
-            <span className="text-sm text-gray-500">({product.reviews || 128} reviews)</span>
-          </div>
+          )}
 
           <div className="flex items-end gap-3 mb-6">
-            <span className="text-4xl font-bold text-gray-900">{formatPrice(product.price)}</span>
+            <span className="text-4xl font-display font-bold text-gray-900">{formatPrice(product.price)}</span>
             {product.originalPrice > product.price && (
               <>
-                <span className="text-lg text-gray-500 line-through mb-1">{formatPrice(product.originalPrice)}</span>
-                <span className="text-sm font-bold text-green-600 bg-green-100 px-2 py-1 rounded-md mb-1">
+                <span className="text-lg text-gray-400 line-through mb-1">{formatPrice(product.originalPrice)}</span>
+                <span className="text-sm font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-md mb-1">
                   {discountPercent}% OFF
                 </span>
               </>
             )}
           </div>
 
-          <div className="mb-6 flex items-center gap-2 text-green-600 font-medium bg-green-50 w-fit px-3 py-1.5 rounded-lg border border-green-100">
+          <div className="mb-6 flex items-center gap-2 text-emerald-700 font-medium bg-emerald-50 w-fit px-3 py-1.5 rounded-lg border border-emerald-100">
             <Check className="w-4 h-4" /> {t('in_stock')}
           </div>
 
@@ -193,23 +197,20 @@ const ProductDetails = () => {
           </div>
 
           {/* Features */}
-          <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-            <ul className="space-y-3 font-semibold">
-              {[
-                "100% Quality Guarantee",
-                "Fast Local Delivery in Sakoli",
-                "Easy Returns & Exchanges",
-                "Secure Payment Options"
-              ].map((feature, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-gray-700">
-                  <div className="mt-0.5 p-1 bg-green-100 text-green-600 rounded-full">
-                    <Check className="w-3 h-3" />
-                  </div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {product.features && product.features.length > 0 && (
+            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <ul className="space-y-3">
+                {product.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-center gap-3 text-sm text-gray-700">
+                    <div className="mt-0.5 p-1 bg-emerald-100 text-emerald-600 rounded-full flex-shrink-0">
+                      <Check className="w-3 h-3" />
+                    </div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 
@@ -217,37 +218,40 @@ const ProductDetails = () => {
       <div className="mb-16">
         <div className="flex border-b border-gray-200">
           <button
-            className={`py-4 px-6 font-semibold text-lg border-b-2 transition-colors ${activeTab === 'description' ? 'border-primary text-primary font-bold' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+            className={`py-4 px-6 font-semibold text-base border-b-2 transition-colors ${activeTab === 'description' ? 'border-primary-500 text-primary-500 font-bold' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
             onClick={() => setActiveTab('description')}
           >
             {t('description')}
           </button>
           <button
-            className={`py-4 px-6 font-semibold text-lg border-b-2 transition-colors ${activeTab === 'why-buy' ? 'border-primary text-primary font-bold' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+            className={`py-4 px-6 font-semibold text-base border-b-2 transition-colors ${activeTab === 'why-buy' ? 'border-primary-500 text-primary-500 font-bold' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
             onClick={() => setActiveTab('why-buy')}
           >
-            Why Buy From Us
+            Why Archu Mart
           </button>
         </div>
-        <div className="py-8 text-gray-700 leading-relaxed font-semibold">
+        <div className="py-8 text-gray-600 leading-relaxed">
           {activeTab === 'description' && (
             <div className="prose max-w-none">
-              <p className="mb-4">
-                Experience the premium quality of {product.name}. Carefully selected to meet your everyday needs, this product delivers exceptional value and performance.
-              </p>
-              <p>
-                {product.description} Archu Mart ensures that all our products meet strict quality standards before they reach your hands. Perfect for regular use, it's designed to make your life easier and more enjoyable.
-              </p>
+              <p>{product.description}</p>
             </div>
           )}
           {activeTab === 'why-buy' && (
             <div className="space-y-4">
-              <p className="font-bold text-gray-900">Why choose Archu Mart in Sakoli?</p>
-              <ul className="list-disc pl-5 space-y-2">
-                <li><strong>Local Trust:</strong> We are a trusted local business serving the Sakoli community for years.</li>
-                <li><strong>Quality Assurance:</strong> Every product on our shelves is verified for quality and freshness.</li>
-                <li><strong>Competitive Pricing:</strong> Enjoy great deals and honest pricing on all your daily needs.</li>
-                <li><strong>Convenient Shopping:</strong> Order online or visit our store - whichever works best for you!</li>
+              <ul className="space-y-3">
+                {[
+                  { label: 'Local Trust', desc: 'A trusted local business serving the Sakoli community.' },
+                  { label: 'Quality Assurance', desc: 'Every product is verified for quality.' },
+                  { label: 'Fair Pricing', desc: 'Honest pricing on all daily needs.' },
+                  { label: 'Convenient Shopping', desc: 'Order online or visit our store — your choice.' },
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <div className="p-1 bg-emerald-100 text-emerald-600 rounded-full mt-0.5 flex-shrink-0">
+                      <Check className="w-3.5 h-3.5" />
+                    </div>
+                    <p><span className="font-semibold text-gray-900">{item.label}:</span> {item.desc}</p>
+                  </li>
+                ))}
               </ul>
             </div>
           )}
@@ -258,8 +262,8 @@ const ProductDetails = () => {
       {relatedProducts.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">{t('related_products')}</h2>
-            <Link to={`/shop?category=${encodeURIComponent(product.category)}`} className="text-primary font-bold flex items-center gap-1 hover:underline">
+            <h2 className="text-2xl font-display font-bold text-gray-900">{t('related_products')}</h2>
+            <Link to={`/shop?category=${encodeURIComponent(product.category)}`} className="text-primary-500 font-bold flex items-center gap-1 hover:text-primary-600 transition-colors">
               {t('view_all_products')} <ChevronRight className="w-4 h-4" />
             </Link>
           </div>

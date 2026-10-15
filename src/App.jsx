@@ -20,7 +20,7 @@ function App() {
   return (
     <CartProvider>
       <WishlistProvider>
-        <div className="min-h-screen bg-surface">
+        <div className="min-h-screen bg-surface text-dark">
           <Navbar onSearchClick={() => setIsSearchOpen(true)} />
           <CartDrawer />
           <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />

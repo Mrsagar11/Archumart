@@ -24,24 +24,27 @@ export default function CartDrawer() {
 
   return (
     <>
-      {/* Overlay */}
-      <div 
-        className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-50 transition-opacity"
+      {/* Overlay — use button for semantic click-to-close */}
+      <button 
+        type="button"
+        className="fixed inset-0 bg-gray-900/40 z-50 transition-opacity w-full cursor-default"
         onClick={toggleCart}
+        aria-label="Close cart"
       />
       
       {/* Drawer */}
-      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white shadow-2xl z-50 transform transition-transform duration-300 flex flex-col ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white shadow-elevated z-50 transform transition-transform duration-300 flex flex-col ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         
         {/* Header */}
         <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900">
-            <ShoppingBag className="text-primary" size={24} />
-            {t('your_cart')} <span className="text-sm font-medium bg-gray-100 px-2 py-1 rounded-full text-gray-600">{cartItems.length}</span>
+          <h2 className="text-xl font-display font-bold flex items-center gap-2 text-gray-900">
+            <ShoppingBag className="text-primary-500" size={22} />
+            {t('your_cart')} <span className="text-sm font-medium bg-gray-100 px-2 py-0.5 rounded-full text-gray-600">{cartItems.length}</span>
           </h2>
           <button 
             onClick={toggleCart}
             className="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+            aria-label="Close cart"
           >
             <X size={20} />
           </button>
@@ -77,12 +80,13 @@ export default function CartDrawer() {
                         <h4 className="font-semibold text-gray-900 line-clamp-2 text-sm">{item.name}</h4>
                         <button 
                           onClick={() => removeFromCart(item.id)}
-                          className="text-gray-400 hover:text-red-500 transition-colors mt-1"
+                          className="text-gray-400 hover:text-red-500 transition-colors mt-1 flex-shrink-0"
+                          aria-label={`Remove ${item.name} from cart`}
                         >
                           <Trash2 size={16} />
                         </button>
                       </div>
-                      <p className="text-primary font-bold text-sm mt-1">{formatPrice(item.price)}</p>
+                      <p className="text-primary-500 font-bold text-sm mt-1">{formatPrice(item.price)}</p>
                     </div>
                     
                     <div className="flex items-center justify-between mt-2">
@@ -90,6 +94,7 @@ export default function CartDrawer() {
                         <button 
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
                           className="w-8 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
+                          aria-label={`Decrease quantity of ${item.name}`}
                         >
                           <Minus size={14} />
                         </button>
@@ -99,6 +104,7 @@ export default function CartDrawer() {
                         <button 
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
                           className="w-8 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
+                          aria-label={`Increase quantity of ${item.name}`}
                         >
                           <Plus size={14} />
                         </button>
@@ -119,7 +125,7 @@ export default function CartDrawer() {
           <div className="border-t border-gray-100 p-6 bg-gray-50">
             <div className="flex justify-between items-center mb-6">
               <span className="text-gray-600 font-medium">{t('subtotal')}</span>
-              <span className="text-xl font-bold text-gray-900">{formatPrice(cartTotal)}</span>
+              <span className="text-xl font-display font-bold text-gray-900">{formatPrice(cartTotal)}</span>
             </div>
             
             <div className="space-y-3">

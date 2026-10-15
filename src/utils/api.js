@@ -40,9 +40,9 @@ export const api = {
       return { success: true };
     } catch (err) {
       console.warn('Backend API offline or failed, using local verification fallback:', err.message);
-      const savedLocalPassword = localStorage.getItem('local_admin_password');
-      const localPassword = savedLocalPassword || import.meta.env.VITE_ADMIN_PASSWORD || 'admin';
-      if (password === localPassword) {
+      // Local fallback: password is stored only in localStorage (never in client env vars)
+      const savedLocalPassword = localStorage.getItem('local_admin_password') || 'admin';
+      if (password === savedLocalPassword) {
         localStorage.setItem('admin_token', 'archumart-admin-token-session');
         return { success: true };
       }

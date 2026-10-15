@@ -1,7 +1,6 @@
 import React from 'react';
-import { Package, BadgeDollarSign, MapPin, MessageCircle } from 'lucide-react';
+import { Package, Banknote, MapPin, MessageCircle } from 'lucide-react';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
-
 import { useLanguage } from '../../context/LanguageContext';
 
 const TrustBadges = () => {
@@ -13,28 +12,32 @@ const TrustBadges = () => {
       icon: Package,
       title: t('trust_variety_title'),
       description: t('trust_variety_desc'),
-      color: "bg-blue-100 text-blue-600",
+      iconBg: "bg-blue-50",
+      iconColor: "text-blue-600",
       delay: "0s"
     },
     {
-      icon: BadgeDollarSign,
+      icon: Banknote,
       title: t('trust_prices_title'),
       description: t('trust_prices_desc'),
-      color: "bg-green-100 text-green-600",
+      iconBg: "bg-emerald-50",
+      iconColor: "text-emerald-600",
       delay: "0.1s"
     },
     {
       icon: MapPin,
       title: t('trust_local_title'),
       description: t('trust_local_desc'),
-      color: "bg-purple-100 text-purple-600",
+      iconBg: "bg-amber-50",
+      iconColor: "text-amber-600",
       delay: "0.2s"
     },
     {
       icon: MessageCircle,
       title: t('trust_whatsapp_title'),
       description: t('trust_whatsapp_desc'),
-      color: "bg-pink-100 text-pink-600",
+      iconBg: "bg-primary-50",
+      iconColor: "text-primary-500",
       delay: "0.3s"
     }
   ];
@@ -48,13 +51,13 @@ const TrustBadges = () => {
             return (
               <div 
                 key={index}
-                className={`bg-white rounded-2xl p-6 shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center animate-on-scroll ${isVisible ? 'visible' : ''}`}
+                className={`bg-white rounded-2xl p-6 shadow-soft hover:shadow-card hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center text-center animate-on-scroll ${isVisible ? 'visible' : ''}`}
                 style={{ transitionDelay: feature.delay }}
               >
-                <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-4 ${feature.color}`}>
-                  <Icon size={28} />
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${feature.iconBg}`}>
+                  <Icon size={24} className={feature.iconColor} />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <h3 className="text-base font-display font-bold text-gray-900 mb-2">{feature.title}</h3>
                 <p className="text-sm text-muted">{feature.description}</p>
               </div>
             );

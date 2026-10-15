@@ -53,8 +53,8 @@ const Shop = () => {
     setDisplayCount(12); // Reset count on search
   };
 
-  const handleSortChange = (e) => {
-    setSortBy(e.target.value);
+  const handleSortChange = (value) => {
+    setSortBy(value);
   };
 
   const filteredAndSortedProducts = useMemo(() => {
@@ -100,7 +100,7 @@ const Shop = () => {
   return (
     <div className="section-padding container-main">
       <div className="text-center mb-8">
-        <h1 className="section-heading">{t('shop_heading')}</h1>
+        <h1 className="section-heading font-display text-gray-900">{t('shop_heading')}</h1>
         <p className="section-subtitle">{t('shop_subtitle')}</p>
       </div>
 
@@ -111,9 +111,10 @@ const Shop = () => {
             placeholder={t('search_placeholder')}
             value={searchQuery}
             onChange={handleSearchChange}
-            className="w-full px-6 py-4 pl-12 rounded-3xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm"
+            aria-label="Search products"
+            className="w-full px-6 py-4 pl-12 rounded-2xl border border-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 shadow-soft"
           />
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-6 h-6" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" aria-hidden="true" />
         </div>
       </div>
 
@@ -125,26 +126,12 @@ const Shop = () => {
 
       <div className="flex justify-between items-center mb-6 text-sm text-gray-600 mt-6">
         <p>{t('showing_products', { count: displayedProducts.length, total: filteredAndSortedProducts.length })}</p>
-        <div className="flex items-center gap-2">
-          <label htmlFor="sort" className="font-semibold text-gray-700">{t('sort_by')}</label>
-          <select 
-            id="sort"
-            value={sortBy}
-            onChange={handleSortChange}
-            className="border border-gray-200 rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 py-1.5 pl-2 pr-8 text-sm font-semibold"
-          >
-            <option value="popular">{t('sort_popularity')}</option>
-            <option value="newest">{t('sort_newest')}</option>
-            <option value="price-low">{t('sort_price_low')}</option>
-            <option value="price-high">{t('sort_price_high')}</option>
-          </select>
-        </div>
       </div>
 
       {loading ? (
         <div className="py-24 flex flex-col items-center justify-center text-gray-500">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mb-4"></div>
-          <p className="text-sm font-medium">Loading catalog items...</p>
+          <div className="w-10 h-10 border-2 border-gray-200 border-t-primary-500 rounded-full animate-spin mb-4" />
+          <p className="text-sm font-medium">Loading products...</p>
         </div>
       ) : filteredAndSortedProducts.length === 0 ? (
         <div className="text-center py-12">

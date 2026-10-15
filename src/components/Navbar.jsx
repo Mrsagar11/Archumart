@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingCart, Menu, X, Phone, Heart, MapPin, ChevronDown, Lock } from 'lucide-react';
+import { Search, ShoppingCart, Menu, X, Phone, Lock, Globe } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useLanguage } from '../context/LanguageContext';
 import { getWhatsAppChatLink } from '../utils/helpers';
+import { useState, useEffect } from 'react';
 
 export default function Navbar({ onSearchClick }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,13 +32,13 @@ export default function Navbar({ onSearchClick }) {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-      isScrolled ? 'bg-white/90 backdrop-blur-md shadow-soft py-3' : 'bg-transparent py-5'
+      isScrolled ? 'bg-white shadow-soft py-3' : 'bg-white/95 py-5'
     }`}>
       <div className="container-main flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 z-50">
           <img src="/logo.jpg" alt="Archu Mart Logo" className="w-9 h-9 rounded-full object-cover border border-gray-100 shadow-sm" />
-          <span className="text-2xl font-black tracking-tight gradient-text">ARCHU MART</span>
+          <span className="text-2xl font-display font-black tracking-tight text-primary-500">ARCHU MART</span>
         </Link>
 
         {/* Desktop Nav Links */}
@@ -46,8 +47,8 @@ export default function Navbar({ onSearchClick }) {
             <Link
               key={link.path}
               to={link.path}
-              className={`font-medium transition-colors hover:text-primary ${
-                isActive(link.path) ? 'text-primary' : 'text-gray-700'
+              className={`font-medium transition-colors hover:text-primary-500 ${
+                isActive(link.path) ? 'text-primary-500' : 'text-gray-700'
               }`}
             >
               {link.name}
@@ -60,28 +61,29 @@ export default function Navbar({ onSearchClick }) {
           {/* Language Selector Dropdown */}
           <div className="relative group">
             <button
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-gray-150 text-xs font-extrabold text-gray-700 hover:bg-gray-100 hover:border-gray-300 transition-colors shadow-soft"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-150 text-xs font-extrabold text-gray-700 hover:bg-gray-100 hover:border-gray-300 transition-colors"
               title="Select Language"
+              aria-label="Select Language"
             >
-              <span>🌐</span>
+              <Globe size={14} />
               <span>{language === 'en' ? 'EN' : language === 'hi' ? 'हिन्दी' : 'मराठी'}</span>
             </button>
-            <div className="absolute right-0 mt-1 w-28 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50 hidden group-hover:block transition-all animate-scale-in">
+            <div className="absolute right-0 mt-1 w-28 bg-white rounded-xl shadow-card border border-gray-100 py-1 z-50 hidden group-hover:block">
               <button
                 onClick={() => changeLanguage('en')}
-                className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-gray-50 transition-colors ${language === 'en' ? 'text-primary' : 'text-gray-700'}`}
+                className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-gray-50 transition-colors ${language === 'en' ? 'text-primary-500' : 'text-gray-700'}`}
               >
                 English
               </button>
               <button
                 onClick={() => changeLanguage('hi')}
-                className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-gray-50 transition-colors ${language === 'hi' ? 'text-primary' : 'text-gray-700'}`}
+                className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-gray-50 transition-colors ${language === 'hi' ? 'text-primary-500' : 'text-gray-700'}`}
               >
                 हिन्दी
               </button>
               <button
                 onClick={() => changeLanguage('mr')}
-                className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-gray-50 transition-colors ${language === 'mr' ? 'text-primary' : 'text-gray-700'}`}
+                className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-gray-50 transition-colors ${language === 'mr' ? 'text-primary-500' : 'text-gray-700'}`}
               >
                 मराठी
               </button>
@@ -90,7 +92,7 @@ export default function Navbar({ onSearchClick }) {
 
           <Link 
             to="/admin" 
-            className="p-2 text-gray-700 hover:text-primary transition-colors"
+            className="p-2 text-gray-700 hover:text-primary-500 transition-colors"
             aria-label="Admin Dashboard"
             title="Admin Login"
           >
@@ -99,20 +101,20 @@ export default function Navbar({ onSearchClick }) {
 
           <button 
             onClick={onSearchClick}
-            className="p-2 text-gray-700 hover:text-primary transition-colors"
-            aria-label="Search"
+            className="p-2 text-gray-700 hover:text-primary-500 transition-colors"
+            aria-label="Search products"
           >
             <Search size={20} />
           </button>
           
           <button 
             onClick={toggleCart}
-            className="p-2 text-gray-700 hover:text-primary transition-colors relative"
-            aria-label="Cart"
+            className="p-2 text-gray-700 hover:text-primary-500 transition-colors relative"
+            aria-label="Open shopping cart"
           >
             <ShoppingCart size={20} />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-primary-400 text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center border border-white">
+              <span className="absolute -top-1 -right-1 bg-primary-500 text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center border-2 border-white">
                 {cartCount}
               </span>
             )}
@@ -132,6 +134,7 @@ export default function Navbar({ onSearchClick }) {
           <button 
             className="md:hidden p-2 text-gray-700"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -149,7 +152,7 @@ export default function Navbar({ onSearchClick }) {
               to={link.path}
               onClick={() => setIsMobileMenuOpen(false)}
               className={`font-medium ${
-                isActive(link.path) ? 'text-primary' : 'text-gray-800'
+                isActive(link.path) ? 'text-primary-500' : 'text-gray-800'
               }`}
             >
               {link.name}
@@ -164,23 +167,25 @@ export default function Navbar({ onSearchClick }) {
             {t('whatsapp_order_btn')}
           </a>
           <div className="flex flex-col gap-2 mt-6 w-3/4">
-            <span className="text-[10px] font-extrabold text-gray-400 text-center uppercase tracking-wider">🌐 Select Language / भाषा निवडा</span>
+            <span className="text-xs font-extrabold text-gray-400 text-center uppercase tracking-wider flex items-center justify-center gap-1.5">
+              <Globe size={12} /> Select Language
+            </span>
             <div className="grid grid-cols-3 gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200">
               <button
                 onClick={() => { changeLanguage('en'); setIsMobileMenuOpen(false); }}
-                className={`py-2 rounded-lg text-xs font-extrabold transition-all ${language === 'en' ? 'bg-primary-400 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
+                className={`py-2 rounded-lg text-xs font-extrabold transition-all ${language === 'en' ? 'bg-primary-500 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
               >
                 EN
               </button>
               <button
                 onClick={() => { changeLanguage('hi'); setIsMobileMenuOpen(false); }}
-                className={`py-2 rounded-lg text-xs font-extrabold transition-all ${language === 'hi' ? 'bg-primary-400 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
+                className={`py-2 rounded-lg text-xs font-extrabold transition-all ${language === 'hi' ? 'bg-primary-500 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
               >
                 हिन्दी
               </button>
               <button
                 onClick={() => { changeLanguage('mr'); setIsMobileMenuOpen(false); }}
-                className={`py-2 rounded-lg text-xs font-extrabold transition-all ${language === 'mr' ? 'bg-primary-400 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
+                className={`py-2 rounded-lg text-xs font-extrabold transition-all ${language === 'mr' ? 'bg-primary-500 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
               >
                 मराठी
               </button>

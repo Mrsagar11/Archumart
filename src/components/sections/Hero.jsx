@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingBag, BookOpen, Home, Gift, Sparkles } from 'lucide-react';
-
+import { ShoppingBag, BookOpen, Home, Gift, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
-const FloatingIcon = ({ Icon, className }) => (
-  <div className={`absolute opacity-30 animate-[float_4s_ease-in-out_infinite] ${className}`}>
-    <Icon size={48} className="text-white drop-shadow-md" />
+const CategoryPill = ({ Icon, label, color }) => (
+  <div className={`flex items-center gap-2.5 px-5 py-3 bg-white rounded-2xl shadow-card border border-gray-100 transition-all duration-300 hover:shadow-elevated hover:-translate-y-0.5`}>
+    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
+      <Icon size={20} />
+    </div>
+    <span className="text-sm font-semibold text-gray-800">{label}</span>
   </div>
 );
 
@@ -14,72 +16,72 @@ const Hero = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden gradient-bg pt-24 pb-16">
-      {/* Decorative floating elements */}
-      <div className="absolute top-[20%] left-[10%] w-32 h-32 bg-pink-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-[float_6s_ease-in-out_infinite]" />
-      <div className="absolute top-[30%] right-[15%] w-40 h-40 bg-purple-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-[float_5s_ease-in-out_infinite_reverse]" />
-      <div className="absolute bottom-[10%] left-[20%] w-36 h-36 bg-blue-300 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-[float_7s_ease-in-out_infinite]" />
-      <div className="absolute bottom-[20%] right-[25%] w-24 h-24 bg-yellow-300 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-[float_4s_ease-in-out_infinite_reverse]" />
-
-      <FloatingIcon Icon={ShoppingBag} className="top-[15%] left-[5%] text-pink-500" />
-      <FloatingIcon Icon={BookOpen} className="top-[25%] right-[8%] text-blue-500 delay-1000" />
-      <FloatingIcon Icon={Home} className="bottom-[20%] left-[8%] text-purple-500 delay-500" />
-      <FloatingIcon Icon={Gift} className="bottom-[15%] right-[10%] text-yellow-500 delay-700" />
-      <FloatingIcon Icon={Sparkles} className="top-[50%] right-[5%] text-pink-400 delay-300" />
+    <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden gradient-bg pt-24 pb-16">
+      {/* Subtle decorative pattern — no blurred blobs */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(244,63,94,0.05)_0%,transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(244,63,94,0.03)_0%,transparent_50%)]" />
 
       <div className="container-main relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
           
           <div className="flex-1 text-center lg:text-left space-y-8 animate-fade-in-up">
-            <h1 className="section-heading text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900 tracking-tight">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-50 rounded-full border border-primary-100">
+              <span className="w-2 h-2 rounded-full bg-primary-400" />
+              <span className="text-sm font-semibold text-primary-600">{t('hero_tag') || 'Your Neighbourhood Store'}</span>
+            </div>
+
+            <h1 className="section-heading text-4xl md:text-5xl lg:text-6xl font-display leading-[1.1] text-gray-900 tracking-tight text-balance">
               {t('hero_title')}
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
               {t('hero_subtitle')}
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
-              <Link to="/shop" className="btn-primary w-full sm:w-auto px-8 py-4 text-lg rounded-full font-medium transition-transform hover:scale-105 shadow-md">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+              <Link to="/shop" className="btn-primary w-full sm:w-auto px-8 py-4 text-lg rounded-full font-semibold flex items-center justify-center gap-2 shadow-card">
                 {t('start_shopping')}
+                <ArrowRight size={20} />
               </Link>
               <a 
                 href="https://wa.me/919356603316" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn-whatsapp w-full sm:w-auto px-8 py-4 text-lg rounded-full font-medium flex items-center justify-center gap-2 transition-transform hover:scale-105 shadow-md"
+                className="btn-whatsapp w-full sm:w-auto px-8 py-4 text-lg rounded-full font-semibold flex items-center justify-center gap-2 shadow-card"
               >
                 {t('order_whatsapp')}
               </a>
             </div>
           </div>
 
-          <div className="flex-1 w-full max-w-md lg:max-w-none relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            {/* Visual pattern representation of categories */}
-            <div className="relative w-full aspect-square max-w-md mx-auto">
-              <div className="absolute top-0 right-0 w-3/4 h-3/4 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-soft transform rotate-6 hover:rotate-0 transition-transform duration-500 flex items-center justify-center p-6">
-                 <div className="text-center space-y-4">
-                   <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto">
-                     <Home size={32} className="text-purple-600" />
-                   </div>
-                   <h3 className="font-semibold text-gray-800">Household</h3>
-                 </div>
+          <div className="flex-1 w-full max-w-md lg:max-w-lg relative animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+            {/* Category card grid — opaque, clean layout */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <CategoryPill Icon={ShoppingBag} label={t('kitchen-household') || 'Kitchen'} color="bg-primary-50 text-primary-500" />
+                <CategoryPill Icon={BookOpen} label={t('school-stationery') || 'Stationery'} color="bg-blue-50 text-blue-600" />
               </div>
-              <div className="absolute bottom-0 left-0 w-2/3 h-2/3 bg-white/50 backdrop-blur-md rounded-3xl border border-white/60 shadow-soft transform -rotate-3 hover:rotate-0 transition-transform duration-500 z-10 flex items-center justify-center p-4">
-                 <div className="text-center space-y-3">
-                   <div className="w-14 h-14 bg-pink-100 rounded-full flex items-center justify-center mx-auto">
-                     <Gift size={28} className="text-pink-600" />
-                   </div>
-                   <h3 className="font-medium text-gray-800">Gifts</h3>
-                 </div>
+              <div className="space-y-4 pt-8">
+                <CategoryPill Icon={Home} label={t('home-storage') || 'Storage'} color="bg-amber-50 text-amber-600" />
+                <CategoryPill Icon={Gift} label={t('gift-items') || 'Gifts'} color="bg-emerald-50 text-emerald-600" />
               </div>
-               <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-white/60 backdrop-blur-md rounded-3xl border border-white/70 shadow-soft transform -rotate-12 hover:rotate-0 transition-transform duration-500 z-20 flex items-center justify-center p-3">
-                 <div className="text-center space-y-2">
-                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                     <BookOpen size={24} className="text-blue-600" />
-                   </div>
-                   <h3 className="text-sm font-medium text-gray-800">Stationery</h3>
-                 </div>
+            </div>
+
+            {/* Stats banner */}
+            <div className="mt-6 bg-white rounded-2xl border border-gray-100 shadow-card p-5 flex items-center justify-around">
+              <div className="text-center">
+                <p className="text-2xl font-display font-bold text-gray-900">24+</p>
+                <p className="text-xs font-medium text-muted">{t('trust_variety_title') || 'Products'}</p>
+              </div>
+              <div className="w-px h-10 bg-gray-100" />
+              <div className="text-center">
+                <p className="text-2xl font-display font-bold text-gray-900">6</p>
+                <p className="text-xs font-medium text-muted">{t('categories') || 'Categories'}</p>
+              </div>
+              <div className="w-px h-10 bg-gray-100" />
+              <div className="text-center">
+                <p className="text-2xl font-display font-bold text-primary-500">Sakoli</p>
+                <p className="text-xs font-medium text-muted">{t('local_store') || 'Local Store'}</p>
               </div>
             </div>
           </div>

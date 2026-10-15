@@ -47,21 +47,23 @@ export default function SearchOverlay({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 flex flex-col animate-in fade-in duration-200">
+    <div className="fixed inset-0 bg-gray-900/80 z-50 flex flex-col animate-in fade-in duration-200">
       <div className="bg-white px-4 py-6 shadow-sm">
         <div className="container-main max-w-4xl mx-auto flex items-center gap-4">
-          <Search className="text-gray-400 shrink-0" size={24} />
+          <Search className="text-gray-400 shrink-0" size={24} aria-hidden="true" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for products, categories..."
-            className="flex-1 bg-transparent border-none outline-none text-xl sm:text-2xl text-gray-900 placeholder:text-gray-300 font-medium"
+            className="flex-1 bg-transparent border-none outline-none text-xl sm:text-2xl text-gray-900 placeholder:text-gray-300 font-medium focus-visible:ring-0"
+            aria-label="Search products"
           />
           <button 
             onClick={onClose}
             className="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+            aria-label="Close search"
           >
             <X size={24} />
           </button>
@@ -72,12 +74,12 @@ export default function SearchOverlay({ isOpen, onClose }) {
         <div className="container-main max-w-4xl mx-auto">
           {query.trim().length <= 1 ? (
             <div className="text-center text-gray-400 mt-12">
-              <Search className="mx-auto mb-4 opacity-50" size={48} />
+              <Search className="mx-auto mb-4 opacity-50" size={48} aria-hidden="true" />
               <p className="text-lg">Type at least 2 characters to search...</p>
             </div>
           ) : results.length === 0 ? (
             <div className="text-center text-gray-400 mt-12">
-              <p className="text-lg">No products found for "{query}"</p>
+              <p className="text-lg">No products found for &ldquo;{query}&rdquo;</p>
             </div>
           ) : (
             <div>
@@ -86,20 +88,21 @@ export default function SearchOverlay({ isOpen, onClose }) {
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {results.map((product) => (
-                  <div 
+                  <button
                     key={product.id}
+                    type="button"
                     onClick={() => handleResultClick(product.id)}
-                    className="flex items-center gap-4 p-3 bg-white rounded-xl cursor-pointer hover:shadow-card hover:-translate-y-1 transition-all duration-200 border border-transparent hover:border-primary/20"
+                    className="flex items-center gap-4 p-3 bg-white rounded-xl cursor-pointer hover:shadow-card hover:-translate-y-0.5 transition-all duration-200 border border-transparent hover:border-primary-100 text-left"
                   >
                     <div className="w-16 h-16 bg-gray-50 rounded-lg overflow-hidden shrink-0">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover mix-blend-multiply" />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-secondary mb-1 uppercase tracking-wider">{product.category}</p>
+                      <p className="text-xs font-semibold text-gray-500 mb-1">{product.category}</p>
                       <h4 className="font-semibold text-gray-900 text-sm line-clamp-1 mb-1">{product.name}</h4>
-                      <p className="font-bold text-primary text-sm">{formatPrice(product.price)}</p>
+                      <p className="font-bold text-primary-500 text-sm">{formatPrice(product.price)}</p>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>

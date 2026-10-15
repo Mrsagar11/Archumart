@@ -8,30 +8,43 @@ const CategoryCard = ({ category }) => {
 
   if (!category) return null;
 
+  // Map category IDs to Tailwind color classes — no emoji, no arbitrary colors
+  const colorMap = {
+    'school-stationery': { bg: 'bg-blue-50', border: 'border-blue-100', accent: 'text-blue-600', dot: 'bg-blue-400' },
+    'kitchen-household': { bg: 'bg-orange-50', border: 'border-orange-100', accent: 'text-orange-600', dot: 'bg-orange-400' },
+    'home-storage': { bg: 'bg-teal-50', border: 'border-teal-100', accent: 'text-teal-600', dot: 'bg-teal-400' },
+    'kids-toys': { bg: 'bg-pink-50', border: 'border-pink-100', accent: 'text-primary-500', dot: 'bg-primary-400' },
+    'gift-items': { bg: 'bg-violet-50', border: 'border-violet-100', accent: 'text-violet-600', dot: 'bg-violet-400' },
+    'daily-essentials': { bg: 'bg-amber-50', border: 'border-amber-100', accent: 'text-amber-600', dot: 'bg-amber-400' },
+  };
+
+  const colors = colorMap[category.id] || { bg: 'bg-gray-50', border: 'border-gray-100', accent: 'text-gray-600', dot: 'bg-gray-400' };
+
   return (
     <Link 
       to={`/shop?category=${category.id}`}
-      className={`group block rounded-3xl p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-card relative overflow-hidden ${category.bgColor || 'bg-gray-50'}`}
+      className={`group block rounded-2xl p-6 border transition-all duration-300 hover:shadow-card hover:-translate-y-0.5 ${colors.bg} ${colors.border}`}
     >
-      {/* Decorative background circle */}
-      <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/20 blur-xl group-hover:scale-150 transition-transform duration-500"></div>
-      
-      <div className="flex flex-col h-full relative z-10">
-        <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300 origin-bottom-left">
-          {category.icon || category.emoji || '📦'}
+      <div className="flex flex-col h-full">
+        {/* Colored dot accent instead of emoji */}
+        <div className="flex items-start justify-between mb-4">
+          <div className={`w-10 h-10 rounded-xl ${colors.bg} border ${colors.border} flex items-center justify-center`}>
+            <div className={`w-4 h-4 rounded-full ${colors.dot}`} />
+          </div>
+          <ArrowRight size={18} className={`${colors.accent} opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5`} />
         </div>
         
-        <h3 className="font-bold text-lg text-gray-900 mb-1">
+        <h3 className={`font-display font-bold text-lg text-gray-900 mb-1.5`}>
           {t(category.id)}
         </h3>
         
-        <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+        <p className="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed">
           {t(`${category.id}_desc`, {}, category.description)}
         </p>
         
-        <div className="mt-auto flex items-center text-primary font-medium text-sm">
-          <span className="mr-2 group-hover:mr-3 transition-all">{t('shop_now')}</span>
-          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+        <div className={`mt-auto flex items-center ${colors.accent} font-semibold text-sm`}>
+          <span className="mr-2">{t('shop_now')}</span>
+          <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
     </Link>

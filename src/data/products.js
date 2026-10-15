@@ -485,7 +485,6 @@ export const searchProducts = (query) => {
   );
 };
 
-// Get all unique categories from products
 export const getUniqueCategories = () => {
   return [...new Set(products.map(p => p.category))];
 };

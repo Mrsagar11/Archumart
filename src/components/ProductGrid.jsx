@@ -13,10 +13,13 @@ const ProductGrid = ({ products = [], columns }) => {
     );
   }
 
-  // Determine grid columns based on prop or default responsive layout
-  const gridClass = columns 
-    ? `grid grid-cols-2 md:grid-cols-${Math.min(columns, 3)} lg:grid-cols-${columns} gap-4 md:gap-6`
-    : "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6";
+  // Map columns to explicit static Tailwind classes
+  const gridClassesMap = {
+    2: 'grid grid-cols-2 gap-4 md:gap-6',
+    3: 'grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6',
+    4: 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6',
+  };
+  const gridClass = gridClassesMap[columns] || 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6';
 
   return (
     <div 
