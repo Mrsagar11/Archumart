@@ -1,9 +1,9 @@
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
 
 let cachedDb = null;
 let cachedClient = null;
 
-async function connectToDatabase() {
+export async function connectToDatabase() {
   const uri = process.env.MONGODB_URI;
   
   if (!uri) {
@@ -17,8 +17,6 @@ async function connectToDatabase() {
 
   // Connect to MongoDB
   const client = await MongoClient.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 3000,
     connectTimeoutMS: 3000
   });
@@ -32,5 +30,3 @@ async function connectToDatabase() {
 
   return { client, db };
 }
-
-module.exports = { connectToDatabase };

@@ -1,4 +1,4 @@
-const { connectToDatabase } = require('./utils/db');
+import { connectToDatabase } from './utils/db.js';
 
 // Realistic starting products to auto-seed if the database is empty
 const defaultProducts = [
@@ -364,7 +364,7 @@ const defaultProducts = [
   }
 ];
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
